@@ -1,50 +1,65 @@
 import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa6'
+import logo from '../assets/wbnt_minimalist.png'
+import socials from '../data/socials.json'
+import footerLinks from '../data/footerLinks.json'
+
+type SocialId = 'instagram' | 'facebook' | 'tiktok'
+
+interface Social {
+  id: SocialId
+  label: string
+  url: string
+}
+
+interface FooterGroup {
+  title: string
+  items: { label: string; url: string }[]
+}
+
+const socialIconMap: Record<SocialId, React.ComponentType<{ className?: string; 'aria-label'?: string }>> = {
+  instagram: FaInstagram,
+  facebook: FaFacebookF,
+  tiktok: FaTiktok,
+}
 
 function Footer() {
+  const socialItems = socials as Social[]
+  const groups = footerLinks as FooterGroup[]
+
   return (
     <footer className="bg-gray-900 py-12 text-gray-300">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-brand text-xl text-pink-400">Walang Basagan ng Thrift</p>
+          <img
+            src={logo}
+            alt="Walang Basagan ng Thrift"
+            className="h-[4.5rem] w-auto"
+          />
           <div className="mt-4 flex gap-4 text-lg items-center">
-            <a href="#" className="hover:text-pink-400">
-              <FaInstagram className="h-5 w-5" aria-label="Instagram" />
-            </a>
-            <a href="#" className="hover:text-pink-400">
-              <FaFacebookF className="h-5 w-5" aria-label="Facebook" />
-            </a>
-            <a href="#" className="hover:text-pink-400">
-              <FaTiktok className="h-5 w-5" aria-label="TikTok" />
-            </a>
+            {socialItems.map((item) => {
+              const Icon = socialIconMap[item.id]
+              return (
+                <a key={item.id} href={item.url} className="hover:text-pink-400" aria-label={item.label}>
+                  <Icon className="h-5 w-5" />
+                </a>
+              )
+            })}
           </div>
         </div>
-        <div>
-          <p className="font-semibold text-white">Y2K Thrift Store</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            <li><a href="#" className="hover:text-pink-400">All Y2K clothing</a></li>
-            <li><a href="#" className="hover:text-pink-400">Tops</a></li>
-            <li><a href="#" className="hover:text-pink-400">Bottoms</a></li>
-            <li><a href="#" className="hover:text-pink-400">Sets</a></li>
-          </ul>
-        </div>
-        <div>
-          <p className="font-semibold text-white">Upcycling</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            <li><a href="#" className="hover:text-pink-400">All Upcycled creations</a></li>
-            <li><a href="#" className="hover:text-pink-400">Unique upcycled sets</a></li>
-            <li><a href="#" className="hover:text-pink-400">Accessories</a></li>
-          </ul>
-        </div>
-        <div>
-          <p className="font-semibold text-white">Information</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            <li><a href="#" className="hover:text-pink-400">Reviews</a></li>
-            <li><a href="#" className="hover:text-pink-400">The concept</a></li>
-            <li><a href="#" className="hover:text-pink-400">Contact</a></li>
-            <li><a href="#" className="hover:text-pink-400">Delivery and Returns</a></li>
-            <li><a href="#" className="hover:text-pink-400">Terms of sale</a></li>
-          </ul>
-        </div>
+        {groups.map((group) => (
+          <div key={group.title}>
+            <p className="font-semibold text-white">{group.title}</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {group.items.map((link) => (
+                <li key={link.label}>
+                  <a href={link.url} className="hover:text-pink-400">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
       <p className="mt-10 text-center text-xs text-gray-500">
         2026 Walang Basagan ng Thrift. All rights reserved.

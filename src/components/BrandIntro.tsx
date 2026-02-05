@@ -1,6 +1,6 @@
 function BrandIntro() {
   return (
-    <section className="bg-pink-200 py-16">
+    <section className="bg-gradient-to-r from-orange-100 via-pink-100 to-lime-100 py-16">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-2">
         <div className="relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-pink-300 to-pink-100">
           <div className="absolute inset-0 flex items-center justify-center text-pink-400/60">

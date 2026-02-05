@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import logo from '../assets/wbnt_logo.png'
 
 interface HeaderProps {
   categories: string[]
@@ -11,8 +12,12 @@ function Header({ categories, onLogin, onSignup, rightSlot }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" className="font-brand text-2xl text-pink-500">
-          Walang Basagan ng Thrift
+        <a href="#" className="flex items-center">
+          <img
+            src={logo}
+            alt="Walang Basagan ng Thrift"
+            className="h-[3.75rem] w-auto sm:h-[4.5rem]"
+          />
         </a>
 
         <nav className="hidden items-center gap-6 text-sm font-poppins font-semibold md:flex">

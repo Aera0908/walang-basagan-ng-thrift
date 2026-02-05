@@ -1,9 +1,9 @@
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500">
+    <section className="relative overflow-hidden bg-gradient-to-b from-yellow-200 via-pink-300 to-sky-200">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-20 text-center text-white">
         <p className="text-sm font-medium">Home - The concept</p>
-        <h1 className="mt-4 text-4xl font-bold drop-shadow-lg sm:text-5xl">
+        <h1 className="mt-4 text-4xl font-bold drop-shadow-lg sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-lime-500 to-sky-500">
           The concept
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed drop-shadow">

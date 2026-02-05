@@ -12,7 +12,7 @@ function AchievementsSection() {
   const items = products as Product[]
 
   return (
-    <section className="bg-pink-50 py-16">
+    <section className="bg-gradient-to-r from-sky-50 via-pink-50 to-yellow-50 py-16">
       <div className="mx-auto max-w-6xl px-6">
         <span className="mx-auto block w-fit rounded-lg bg-pink-500 px-6 py-2 font-bold uppercase tracking-widest text-white">
           Some of Our Achievements

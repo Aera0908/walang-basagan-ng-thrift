@@ -1,0 +1,7 @@
+[
+  { "id": "p1", "name": "Vivienne", "price": 350, "size": "M", "status": "Available" },
+  { "id": "p2", "name": "Sully", "price": 299, "size": "S to M", "status": "Available" },
+  { "id": "p3", "name": "Rosie", "price": 420, "size": "M to L", "status": "Available" },
+  { "id": "p4", "name": "Nancy", "price": 199, "size": "M", "status": "Sold" }
+]
+

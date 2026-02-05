@@ -1,0 +1,7 @@
+[
+  { "iconKey": "scissors", "label": "Local crafts" },
+  { "iconKey": "package", "label": "Fast delivery" },
+  { "iconKey": "lock", "label": "Secure payment" },
+  { "iconKey": "heart", "label": "Contact us" }
+]
+

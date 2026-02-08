@@ -20,8 +20,7 @@ function BrandIntro() {
           </h2>
           <div className="rounded-2xl bg-white p-6 shadow">
             <p>
-              We transform pre-loved pieces into colorful and unique ensembles through an
-              upcycling process inspired by early-2000s Filipino fashion icons like Jolina
+              We curate colorful and unique ensembles from pre-loved pieces inspired by early-2000s Filipino fashion icons like Jolina
               Magdangal and Julie Anne San Jose.
             </p>
             <p className="mt-4">
@@ -29,9 +28,6 @@ function BrandIntro() {
               <span className="font-semibold text-pink-500"> online Y2K thrift shop</span>.
             </p>
           </div>
-          <button className="rounded-full bg-pink-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-pink-400">
-            Upcycling
-          </button>
         </div>
       </div>
     </section>

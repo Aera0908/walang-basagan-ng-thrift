@@ -1,3 +1,5 @@
+import minimalistLogo from '../assets/wbnt_minimalist.png'
+
 type Mode = 'login' | 'signup'
 
 interface AuthPageProps {
@@ -12,9 +14,13 @@ function AuthPage({ mode, onBackHome, onSwitchMode }: AuthPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 via-white to-pink-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl border border-pink-100">
-        <p className="font-brand text-center text-3xl text-pink-500 mb-2">
-          Walang Basagan ng Thrift
-        </p>
+        <div className="flex justify-center mb-4">
+          <img
+            src={minimalistLogo}
+            alt="Walang Basagan ng Thrift"
+            className="h-16 w-auto sm:h-20"
+          />
+        </div>
         <h1 className="text-2xl font-bold text-gray-900 text-center">
           {isLogin ? 'Log in to your account' : 'Create your account'}
         </h1>

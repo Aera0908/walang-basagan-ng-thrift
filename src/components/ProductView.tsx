@@ -29,20 +29,10 @@ function ProductView() {
               Ultra-soft thrifted cotton with layered straps, adjustable fit, and a glossy Y2K
               finish.
             </p>
-            <div className="flex flex-wrap gap-2">
-              {['Pink', 'Lavender', 'Icy Blue'].map((c) => (
-                <span
-                  key={c}
-                  className="rounded-full border border-pink-200 px-4 py-1 text-xs font-medium text-pink-500"
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
             <div className="rounded-xl bg-pink-50 p-4 text-sm text-gray-700">
               <p className="font-semibold">Description</p>
               <ul className="mt-2 list-inside list-disc space-y-1">
-                <li>Pre-loved, customized, and upcycled.</li>
+                <li>Pre-loved thrifted clothing.</li>
                 <li>Perfect with flare pants and chrome accessories.</li>
                 <li>Student-friendly pricing.</li>
               </ul>

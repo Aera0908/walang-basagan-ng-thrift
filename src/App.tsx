@@ -3,7 +3,6 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import BrandIntro from './components/BrandIntro'
 import JacketShowcase from './components/JacketShowcase'
-import CustomProjects from './components/CustomProjects'
 import TrustedSection from './components/TrustedSection'
 import AchievementsSection from './components/AchievementsSection'
 import ProductView from './components/ProductView'
@@ -23,7 +22,6 @@ function App({ onLogin, onSignup }: AppProps) {
       <Hero />
       <BrandIntro />
       <JacketShowcase />
-      <CustomProjects />
       <TrustedSection />
       <AchievementsSection />
       <ProductView />

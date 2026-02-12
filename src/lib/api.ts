@@ -167,6 +167,12 @@ export async function fetchProducts(limit?: number): Promise<{ products: Product
   return fetchJson(url)
 }
 
+export interface FooterSocials {
+  facebook?: { image?: string }
+  instagram?: { image?: string }
+  tiktok?: { image?: string }
+}
+
 export interface HomepageContent {
   hero_banners?: { id: string; title: string; subtitle: string; description: string; image: string }[]
   achievements_title?: string
@@ -174,6 +180,7 @@ export interface HomepageContent {
   cta?: { title: string; buttonText: string }
   about_us?: { title: string; headline: string; sub_text?: string; image?: string }
   trusted_section?: { title: string; review_ids?: number[] }
+  footer_socials?: FooterSocials
 }
 
 export async function fetchHomepage(): Promise<{ content: HomepageContent }> {

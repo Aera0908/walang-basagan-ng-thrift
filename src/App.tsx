@@ -211,7 +211,7 @@ function App() {
               <FeaturesSection />
               <AboutUsSection content={homepageContent.about_us} />
               <ReviewsSection />
-              <Footer />
+              <Footer footerSocials={homepageContent.footer_socials} />
             </>
           }
         />

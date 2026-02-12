@@ -1467,6 +1467,99 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                 </div>
               </div>
 
+              {/* Footer Socials */}
+              <div className="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenSections((s) => ({ ...s, footerSocials: !s.footerSocials }))}
+                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Footer Socials</h3>
+                    <p className="text-sm text-gray-500 mt-0.5">Upload images for Facebook, Instagram, TikTok profile modals.</p>
+                  </div>
+                  <FaChevronDown className={`w-5 h-5 text-gray-500 shrink-0 transition-transform duration-200 ${openSections.footerSocials ? 'rotate-180' : ''}`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSections.footerSocials ? 'max-h-[1200px]' : 'max-h-0'}`}>
+                  <div className="px-6 pb-6 pt-4 border-t border-gray-100 space-y-6">
+                    {(['facebook', 'instagram', 'tiktok'] as const).map((social) => {
+                      const socialData = (homepageContent.footer_socials || {})[social] as { image?: string } | undefined
+                      const image = socialData?.image || ''
+                      return (
+                        <div key={social} className="p-4 rounded-lg border border-gray-200">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">{social}</label>
+                          <div className="flex gap-3 items-start flex-wrap">
+                            <div className="flex-1 min-w-[200px]">
+                              <div className="flex gap-2 items-center">
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="text-sm text-gray-600 file:mr-2 file:py-2 file:px-4 file:rounded file:border-0 file:bg-purple-50 file:text-purple-700"
+                                  onChange={async (e) => {
+                                    const file = e.target.files?.[0]
+                                    if (!file || !user?.id) return
+                                    setError('')
+                                    try {
+                                      const { filename } = await api.uploadHomepageImage(user.id, file)
+                                      setHomepageContent((c) => ({
+                                        ...c,
+                                        footer_socials: {
+                                          ...(c.footer_socials || {}),
+                                          [social]: { image: filename },
+                                        },
+                                      }))
+                                    } catch (err) {
+                                      setError(err instanceof Error ? err.message : 'Failed to upload')
+                                    }
+                                    e.target.value = ''
+                                  }}
+                                />
+                                <span className="text-xs text-gray-500">or URL:</span>
+                                <input
+                                  value={image}
+                                  onChange={(e) =>
+                                    setHomepageContent((c) => ({
+                                      ...c,
+                                      footer_socials: {
+                                        ...(c.footer_socials || {}),
+                                        [social]: { image: e.target.value },
+                                      },
+                                    }))
+                                  }
+                                  placeholder="Image URL"
+                                  className="flex-1 min-w-[120px] rounded border border-gray-200 px-3 py-2 text-sm"
+                                />
+                              </div>
+                              {image && (
+                                <img
+                                  src={api.getImageUrl(image)}
+                                  alt=""
+                                  className="mt-2 h-24 w-32 object-cover rounded border"
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                    <button
+                      onClick={async () => {
+                        if (!user?.id) return
+                        setError('')
+                        try {
+                          await api.updateHomepageSection(user.id, 'footer_socials', homepageContent.footer_socials || {})
+                        } catch (err) {
+                          setError(err instanceof Error ? err.message : 'Failed to save')
+                        }
+                      }}
+                      className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700"
+                    >
+                      Save Footer Socials
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         ) : null}

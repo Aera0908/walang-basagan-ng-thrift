@@ -3,6 +3,8 @@ import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa6'
 import logo from '../assets/wbnt_minimalist.png'
 import socials from '../data/socials.json'
 import footerLinks from '../data/footerLinks.json'
+import * as api from '../lib/api'
+import type { FooterSocials } from '../lib/api'
 
 type SocialId = 'instagram' | 'facebook' | 'tiktok'
 
@@ -23,13 +25,17 @@ const socialIconMap: Record<SocialId, React.ComponentType<{ className?: string; 
   tiktok: FaTiktok,
 }
 
-const socialImageMap: Record<SocialId, string> = {
+const PLACEHOLDER_IMAGES: Record<SocialId, string> = {
   facebook: '/socials/facebook-placeholder.svg',
   instagram: '/socials/instagram-placeholder.svg',
   tiktok: '/socials/tiktok-placeholder.svg',
 }
 
-function Footer() {
+interface FooterProps {
+  footerSocials?: FooterSocials
+}
+
+function Footer({ footerSocials }: FooterProps) {
   const socialItems = socials as Social[]
   const groups = footerLinks as FooterGroup[]
   const [socialModal, setSocialModal] = useState<SocialId | null>(null)
@@ -88,7 +94,11 @@ function Footer() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={socialImageMap[socialModal]}
+              src={
+                (footerSocials?.[socialModal] as { image?: string })?.image
+                  ? api.getImageUrl((footerSocials[socialModal] as { image?: string }).image)
+                  : PLACEHOLDER_IMAGES[socialModal]
+              }
               alt={`${socialModal} profile`}
               className="w-full h-auto object-contain"
             />

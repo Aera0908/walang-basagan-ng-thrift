@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import heroBanners from '../data/heroBanners.json'
+import { getImageUrl } from '../lib/api'
 
 interface HeroBanner {
   id: string
@@ -9,8 +10,10 @@ interface HeroBanner {
   image: string
 }
 
-function Hero() {
-  const banners = heroBanners as HeroBanner[]
+const defaultBanners = heroBanners as HeroBanner[]
+
+function Hero({ banners = defaultBanners }: { banners?: HeroBanner[] }) {
+  const bannersToUse = banners?.length ? banners : defaultBanners
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
@@ -19,13 +22,13 @@ function Hero() {
     const interval = setInterval(() => {
       setIsTransitioning(true)
       setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length)
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % bannersToUse.length)
         setTimeout(() => setIsTransitioning(false), 100)
       }, 350)
     }, 10000)
 
     return () => clearInterval(interval)
-  }, [banners.length])
+  }, [bannersToUse.length])
 
   const handleBannerClick = (index: number) => {
     if (index === currentIndex) return
@@ -40,7 +43,7 @@ function Hero() {
     <section className="relative overflow-hidden h-screen max-h-screen w-full">
       {/* Main Hero Section */}
       <div className="relative h-full max-h-full w-full">
-        {banners.map((banner, index) => (
+        {bannersToUse.map((banner, index) => (
           <div
             key={banner.id}
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
@@ -50,7 +53,7 @@ function Hero() {
             {/* Background Image */}
             <div 
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${banner.image})` }}
+              style={{ backgroundImage: `url(${getImageUrl(banner.image)})` }}
             >
               {/* Overlay for better text readability */}
               <div className="absolute inset-0 bg-black/40" />
@@ -82,7 +85,7 @@ function Hero() {
 
       {/* Smaller Banner Thumbnails - Bottom Right */}
       <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex gap-2 sm:gap-3">
-        {banners.map((banner, index) => (
+        {bannersToUse.map((banner, index) => (
           <button
             key={banner.id}
             onClick={() => handleBannerClick(index)}
@@ -95,7 +98,7 @@ function Hero() {
           >
             <div 
               className="h-24 w-36 sm:h-28 sm:w-40 bg-cover bg-center transition-opacity duration-300"
-              style={{ backgroundImage: `url(${banner.image})` }}
+              style={{ backgroundImage: `url(${getImageUrl(banner.image)})` }}
             />
             {index === currentIndex && (
               <div className="absolute inset-0 bg-white/20" />

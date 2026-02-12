@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa6'
 import logo from '../assets/wbnt_minimalist.png'
 import socials from '../data/socials.json'
@@ -22,9 +23,16 @@ const socialIconMap: Record<SocialId, React.ComponentType<{ className?: string; 
   tiktok: FaTiktok,
 }
 
+const socialImageMap: Record<SocialId, string> = {
+  facebook: '/socials/facebook-placeholder.svg',
+  instagram: '/socials/instagram-placeholder.svg',
+  tiktok: '/socials/tiktok-placeholder.svg',
+}
+
 function Footer() {
   const socialItems = socials as Social[]
   const groups = footerLinks as FooterGroup[]
+  const [socialModal, setSocialModal] = useState<SocialId | null>(null)
 
   return (
     <footer className="bg-gray-900 py-12 text-gray-300">
@@ -39,9 +47,14 @@ function Footer() {
             {socialItems.map((item) => {
               const Icon = socialIconMap[item.id]
               return (
-                <a key={item.id} href={item.url} className="hover:text-pink-400" aria-label={item.label}>
+                <button
+                  key={item.id}
+                  onClick={() => setSocialModal(item.id)}
+                  className="hover:text-pink-400 transition"
+                  aria-label={item.label}
+                >
                   <Icon className="h-5 w-5" />
-                </a>
+                </button>
               )
             })}
           </div>
@@ -64,6 +77,31 @@ function Footer() {
       <p className="mt-10 text-center text-xs text-gray-500">
         2026 Walang Basagan ng Thrift. All rights reserved.
       </p>
+
+      {socialModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4"
+          onClick={() => setSocialModal(null)}
+        >
+          <div
+            className="relative max-h-[90vh] max-w-lg rounded-xl overflow-hidden bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={socialImageMap[socialModal]}
+              alt={`${socialModal} profile`}
+              className="w-full h-auto object-contain"
+            />
+            <button
+              onClick={() => setSocialModal(null)}
+              className="absolute top-4 right-4 rounded-full bg-black/50 p-2 text-white hover:bg-black/70 transition"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </footer>
   )
 }

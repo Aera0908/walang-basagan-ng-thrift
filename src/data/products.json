@@ -1,7 +1,6 @@
 [
-  { "id": "p1", "name": "Vivienne", "price": 350, "size": "Free Size", "status": "Available" },
-  { "id": "p2", "name": "Sully", "price": 299, "size": "Free Size", "status": "Available" },
-  { "id": "p3", "name": "Rosie", "price": 420, "size": "Free Size", "status": "Available" },
-  { "id": "p4", "name": "Nancy", "price": 199, "size": "Free Size", "status": "Sold" }
+  {"id":"p1","name":"Vivienne","price":350,"size":"Free Size","status":"Available","category":"Tops","rating":4.8,"reviewCount":12,"description":"Ultra-soft thrifted cotton with layered straps, adjustable fit, and a glossy Y2K finish."},
+  {"id":"p2","name":"Sully","price":299,"size":"Free Size","status":"Available","category":"Bottoms","rating":4.5,"reviewCount":8,"description":"Vintage denim with a relaxed fit. Perfect for everyday wear."},
+  {"id":"p3","name":"Rosie","price":420,"size":"Free Size","status":"Available","category":"Set","rating":5,"reviewCount":15,"description":"Complete Y2K set with matching top and bottom. Statement piece."},
+  {"id":"p4","name":"Nancy","price":199,"size":"Free Size","status":"Sold","category":"Tops","rating":4.2,"reviewCount":5,"description":"Pre-loved thrifted clothing. Student-friendly pricing."}
 ]
-

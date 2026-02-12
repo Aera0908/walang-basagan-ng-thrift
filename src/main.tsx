@@ -1,39 +1,69 @@
-import { StrictMode, useState } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import AuthPage from './pages/AuthPage.tsx'
+import AdminDashboard from './pages/AdminDashboard.tsx'
+import SupportPage from './pages/SupportPage.tsx'
+import { AuthProvider, useAuth } from './context/AuthContext.tsx'
 
-type View = 'home' | 'login' | 'signup'
+function AdminRoute() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  if (!user || (user.role !== 'admin' && user.role !== 'mod')) {
+    return <Navigate to="/" replace />
+  }
+  return <AdminDashboard onBack={() => navigate('/')} />
+}
+
+function AuthLoginRoute() {
+  const navigate = useNavigate()
+  return (
+    <AuthPage
+      mode="login"
+      onBackHome={() => navigate('/')}
+      onSuccess={(user) => navigate(user.role === 'admin' || user.role === 'mod' ? '/admin/products' : '/')}
+      onSwitchMode={(next) => navigate(next === 'login' ? '/login' : '/signup')}
+    />
+  )
+}
+
+function AuthSignupRoute() {
+  const navigate = useNavigate()
+  return (
+    <AuthPage
+      mode="signup"
+      onBackHome={() => navigate('/')}
+      onSuccess={(user) => navigate(user.role === 'admin' || user.role === 'mod' ? '/admin/products' : '/')}
+      onSwitchMode={(next) => navigate(next === 'login' ? '/login' : '/signup')}
+    />
+  )
+}
+
+function SupportRoute() {
+  const navigate = useNavigate()
+  return <SupportPage onBack={() => navigate('/')} />
+}
 
 function Root() {
-  const [view, setView] = useState<View>('home')
-
-  if (view === 'login') {
-    return (
-      <AuthPage
-        mode="login"
-        onBackHome={() => setView('home')}
-        onSwitchMode={(next) => setView(next)}
-      />
-    )
-  }
-
-  if (view === 'signup') {
-    return (
-      <AuthPage
-        mode="signup"
-        onBackHome={() => setView('home')}
-        onSwitchMode={(next) => setView(next)}
-      />
-    )
-  }
-
-  return <App onLogin={() => setView('login')} onSignup={() => setView('signup')} />
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/admin/*" element={<AdminRoute />} />
+        <Route path="/login" element={<AuthLoginRoute />} />
+        <Route path="/signup" element={<AuthSignupRoute />} />
+        <Route path="/support" element={<SupportRoute />} />
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </AuthProvider>
+  )
 }
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Root />
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
   </StrictMode>,
 )

@@ -11,7 +11,8 @@
   {
     "title": "Information",
     "items": [
-      { "label": "Reviews", "url": "#" },
+      { "label": "Reviews", "url": "#reviews" },
+      { "label": "About Us", "url": "#about-us" },
       { "label": "The concept", "url": "#" },
       { "label": "Contact", "url": "#" },
       { "label": "Delivery and Returns", "url": "#" },

@@ -3,7 +3,7 @@ setlocal
 
 echo.
 echo =============================================
-echo   Installing Node.js (using node-installer)
+echo   Walang Basagan ng Thrift - Node.js Install
 echo =============================================
 echo.
 
@@ -22,7 +22,7 @@ if not exist "%~dp0node-installer.msi" (
 REM Basic check if node is already installed
 where node >nul 2>&1
 if %errorlevel%==0 (
-  echo Node.js already appears to be installed on this machine.
+  echo Node.js is already installed.
   echo.
   choice /M "Do you still want to run the installer" /C YN
   if errorlevel 2 goto :eof
@@ -38,7 +38,10 @@ start "" msiexec /i "%~dp0node-installer.msi"
 echo.
 echo The Node.js installer has been started.
 echo Please follow the steps in the setup window.
-echo When the installation is finished, you can close this window.
+echo.
+echo When finished:
+echo   1. Close this window.
+echo   2. Double-click run.bat to start the site.
 echo.
 pause
 

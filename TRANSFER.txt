@@ -20,5 +20,8 @@ To run this project on a different computer:
 4. If SQLite fails on the new device:
    - Use run-server-json.bat instead (no native SQLite needed)
 
+5. To create user accounts (1 admin, 3 mod, 5 buyer):
+   - Run create-users.bat (first time or on new device)
+
 No configuration needed. The batch files find their location
 automatically and work from any folder path.

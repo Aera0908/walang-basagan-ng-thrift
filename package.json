@@ -11,6 +11,8 @@
     "stop": "npx kill-port 5173 3002",
     "seed:admin": "node server/seed-admin.js",
     "seed:admin:json": "node server/seed-admin-json.js",
+    "seed:users": "node server/seed-users.js",
+    "seed:users:json": "node server/seed-users-json.js",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

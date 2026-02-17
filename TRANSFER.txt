@@ -1,0 +1,24 @@
+=============================================
+  Transferring to Another Device
+=============================================
+
+To run this project on a different computer:
+
+1. Copy the ENTIRE project folder (USB, cloud, zip, etc.)
+   - All paths in the batch files are relative to the folder
+   - Works on any drive (C:\, D:\, etc.) and any path
+
+2. On the new device, double-click run.bat
+   - First run will install dependencies (requires internet)
+   - Node.js must be installed (download from nodejs.org)
+
+3. If Node.js is not installed:
+   - Copy node-installer.msi into this folder
+   - Run install-node.bat
+   - Then run run.bat
+
+4. If SQLite fails on the new device:
+   - Use run-server-json.bat instead (no native SQLite needed)
+
+No configuration needed. The batch files find their location
+automatically and work from any folder path.

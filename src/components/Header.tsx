@@ -45,6 +45,22 @@ function Header({ categories, cartCount = 0, onLogin, onSignup, onGoToAdmin, onH
           : 'bg-transparent shadow-none'
       }`}
     >
+      {/* Free shipping marquee - only when scrolled past hero (same as navbar change) */}
+      {useSolidHeader && (
+        <div className="overflow-hidden border-b border-gray-100 bg-pink-50/80 py-1.5">
+          <div className="flex animate-marquee whitespace-nowrap text-sm font-semibold text-pink-700" style={{ width: 'max-content' }}>
+            {[1, 2].map((copy) => (
+              <div key={copy} className="flex shrink-0" aria-hidden={copy === 2}>
+                {[...Array(8)].map((_, i) => (
+                  <span key={i} className="mx-8">
+                    🚚 FREE SHIPPING
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <button type="button" onClick={onHomeClick} className="flex items-center">
           <img

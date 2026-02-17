@@ -171,12 +171,27 @@ export interface FooterSocials {
   facebook?: { image?: string }
   instagram?: { image?: string }
   tiktok?: { image?: string }
+  x?: { image?: string }
+}
+
+export interface JacketShowcaseCard {
+  label: string
+  bg_color?: string
+  image?: string
+}
+
+export interface JacketShowcaseContent {
+  cards?: JacketShowcaseCard[]
+  bottom_text?: string
+  /** Fallback image when a card has no image (e.g. public Google Drive link) */
+  default_image?: string
 }
 
 export interface HomepageContent {
   hero_banners?: { id: string; title: string; subtitle: string; description: string; image: string }[]
   achievements_title?: string
   brand_intro?: { title?: string; headline: string; paragraph1: string; paragraph2: string; image?: string }
+  jacket_showcase?: JacketShowcaseContent
   cta?: { title: string; buttonText: string }
   about_us?: { title: string; headline: string; sub_text?: string; image?: string }
   trusted_section?: { title: string; review_ids?: number[] }

@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa6'
+import { FaInstagram, FaFacebookF, FaTiktok, FaXTwitter } from 'react-icons/fa6'
 import logo from '../assets/wbnt_minimalist.png'
 import socials from '../data/socials.json'
 import footerLinks from '../data/footerLinks.json'
 import * as api from '../lib/api'
 import type { FooterSocials } from '../lib/api'
 
-type SocialId = 'instagram' | 'facebook' | 'tiktok'
+type SocialId = 'instagram' | 'facebook' | 'tiktok' | 'x'
 
 interface Social {
   id: SocialId
@@ -23,12 +23,14 @@ const socialIconMap: Record<SocialId, React.ComponentType<{ className?: string; 
   instagram: FaInstagram,
   facebook: FaFacebookF,
   tiktok: FaTiktok,
+  x: FaXTwitter,
 }
 
 const PLACEHOLDER_IMAGES: Record<SocialId, string> = {
   facebook: '/socials/facebook-placeholder.svg',
   instagram: '/socials/instagram-placeholder.svg',
   tiktok: '/socials/tiktok-placeholder.svg',
+  x: '/socials/x-placeholder.svg',
 }
 
 interface FooterProps {

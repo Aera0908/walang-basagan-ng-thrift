@@ -1,6 +1,6 @@
 @echo off
 setlocal
-
+REM Portable: works when project folder is copied to any drive or path
 echo.
 echo =============================================
 echo   Walang Basagan ng Thrift - Node.js Install

@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import * as api from './lib/api'
 import type { HomepageContent } from './lib/api'
+import { mergeWithDefaults } from './lib/homepageDefaults'
 import categories from './data/categories.json'
 import Header from './components/Header'
 import BackgroundMusic from './components/BackgroundMusic'
@@ -15,6 +16,8 @@ import ProductsPage from './components/ProductsPage'
 import FeaturesSection from './components/FeaturesSection'
 import AboutUsSection from './components/AboutUsSection'
 import ReviewsSection from './components/ReviewsSection'
+import Y2KSection from './components/Y2KSection'
+import NewsletterSection from './components/NewsletterSection'
 import Footer from './components/Footer'
 import ProductDetailPage from './components/ProductDetailPage'
 import CartPage from './components/CartPage'
@@ -39,7 +42,7 @@ function App() {
   const isHome = pathname === '/'
 
   useEffect(() => {
-    api.fetchHomepage().then((res) => setHomepageContent(res.content)).catch(() => {})
+    api.fetchHomepage().then((res) => setHomepageContent(mergeWithDefaults(res.content || {}))).catch(() => setHomepageContent(mergeWithDefaults({})))
   }, [])
 
   useEffect(() => {
@@ -199,10 +202,10 @@ function App() {
             <>
               <Hero banners={homepageContent.hero_banners} />
               <BrandIntro content={homepageContent.brand_intro} />
-              <JacketShowcase />
+              <JacketShowcase content={homepageContent.jacket_showcase} />
               <TrustedSection content={homepageContent.trusted_section} />
               <AchievementsSection
-                achievementsTitle="Some of Our Achievements"
+                achievementsTitle={homepageContent.achievements_title}
                 isLoggedIn={!!user}
                 onProductClick={(id) => navigate(`/products/${id}`)}
                 onBrowseMoreClick={() => navigate('/products')}
@@ -211,6 +214,8 @@ function App() {
               <FeaturesSection />
               <AboutUsSection content={homepageContent.about_us} />
               <ReviewsSection />
+              <Y2KSection />
+              <NewsletterSection />
               <Footer footerSocials={homepageContent.footer_socials} />
             </>
           }

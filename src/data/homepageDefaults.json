@@ -1,0 +1,58 @@
+{
+  "hero_banners": [
+    {
+      "id": "banner1",
+      "title": "The concept",
+      "subtitle": "Home - The concept",
+      "description": "Dive into the Walang Basagan ng Thrift universe! Discover a selection of Y2K pieces and thrifted clothing that bring trendy, colorful vintage outfits to your wardrobe",
+      "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&h=1080&fit=crop"
+    },
+    {
+      "id": "banner2",
+      "title": "Y2K Collection",
+      "subtitle": "Home - Collection",
+      "description": "Explore our curated selection of authentic Y2K thrifted pieces. From colorful tops to trendy sets, find your perfect vintage style",
+      "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
+    },
+    {
+      "id": "banner3",
+      "title": "Vintage Finds",
+      "subtitle": "Home - Vintage",
+      "description": "Discover unique pre-loved clothing from the 90s and 2000s. Each piece tells a story and brings retro vibes to your modern wardrobe",
+      "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=1080&fit=crop"
+    }
+  ],
+  "achievements_title": "Some of Our Achievements",
+  "brand_intro": {
+    "title": "Walang Basagan ng Thrift is ...",
+    "headline": "The brand that brightens up your wardrobe!",
+    "paragraph1": "We curate colorful and unique ensembles from pre-loved pieces inspired by early-2000s Filipino fashion icons like Jolina Magdangal and Julie Anne San Jose.",
+    "paragraph2": "What is more, we hunt quality, iconic vintage clothing from the 90s/2000s for our online Y2K thrift shop.",
+    "image": "https://drive.google.com/thumbnail?id=1__kMxBIOesNjgmf-FP98pNrEl4wl5Emk=w1000"
+  },
+  "jacket_showcase": {
+    "default_image": "",
+    "bottom_text": "WALANG BASAGAN",
+    "cards": [
+      { "label": "Jacket", "bg_color": "purple-200", "image": "https://drive.google.com/thumbnail?id=107A0D-sISXwwuZ5-XAlfswGklZrUcNs9&sz=w1000" },
+      { "label": "Jacket", "bg_color": "pink-200", "image": "https://drive.google.com/thumbnail?id=1044_uq69kapveJxakCezpfYt7OHn_GiV&sz=w1000" },
+      { "label": "Jacket", "bg_color": "yellow-100", "image": "https://drive.google.com/thumbnail?id=108_UuAFfAGIOGyxgcirmVUTWWkJNEN-F&sz=w1000" }
+    ]
+  },
+  "about_us": {
+    "title": "About Us",
+    "headline": "Walang Basagan ng Thrift",
+    "sub_text": "We curate colorful and unique ensembles from pre-loved pieces inspired by early-2000s Filipino fashion icons. Our mission is to bring Y2K vibes to your wardrobe while promoting sustainable fashion through thrifting.",
+    "image": ""
+  },
+  "trusted_section": {
+    "title": "They Trusted Us",
+    "review_ids": []
+  },
+  "footer_socials": {
+    "facebook": { "image": "" },
+    "instagram": { "image": "" },
+    "tiktok": { "image": "" },
+    "x": { "image": "" }
+  }
+}

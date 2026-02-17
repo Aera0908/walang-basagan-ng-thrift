@@ -1,5 +1,7 @@
 @echo off
+setlocal
 REM Runs both frontend and backend. Admin Dashboard needs both.
+REM Portable: use script directory so it works when copied to any location
 cd /d "%~dp0"
 
 echo.

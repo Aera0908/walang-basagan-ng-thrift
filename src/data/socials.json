@@ -1,18 +1,6 @@
 [
-  {
-    "id": "instagram",
-    "label": "Instagram",
-    "url": "#"
-  },
-  {
-    "id": "facebook",
-    "label": "Facebook",
-    "url": "#"
-  },
-  {
-    "id": "tiktok",
-    "label": "TikTok",
-    "url": "#"
-  }
+  { "id": "instagram", "label": "Instagram", "url": "#" },
+  { "id": "facebook", "label": "Facebook", "url": "#" },
+  { "id": "tiktok", "label": "TikTok", "url": "#" },
+  { "id": "x", "label": "X", "url": "#" }
 ]
-

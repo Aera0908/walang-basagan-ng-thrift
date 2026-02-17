@@ -1,5 +1,7 @@
 @echo off
+setlocal
 REM Run backend with JSON store (no SQLite). Use if SQLite fails on Windows.
+REM Portable: use script directory so it works when copied to any location
 cd /d "%~dp0"
 set USE_JSON_DB=1
 

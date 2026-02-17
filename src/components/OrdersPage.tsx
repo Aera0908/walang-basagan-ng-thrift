@@ -232,7 +232,7 @@ function OrdersPage({ userId, onBack, onProductClick }: OrdersPageProps) {
                     {(order.status === 'pending' || order.status === 'processing') && (
                       <button
                         onClick={() => setOrderToCancel(order)}
-                        className="text-sm font-medium text-red-600 hover:text-red-700"
+                        className="px-4 py-2 rounded-lg text-sm font-semibold border-2 border-red-300 bg-red-50 text-red-700 hover:bg-red-100 hover:border-red-400 transition"
                       >
                         Cancel order
                       </button>
@@ -240,9 +240,9 @@ function OrdersPage({ userId, onBack, onProductClick }: OrdersPageProps) {
                     {order.status === 'shipped' && (
                       <button
                         onClick={() => setOrderToTrack(order)}
-                        className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
+                        className="px-4 py-2 rounded-lg text-sm font-semibold border-2 border-indigo-300 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:border-indigo-400 transition"
                       >
-                        Track
+                        Track order
                       </button>
                     )}
                   </div>

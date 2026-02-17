@@ -36,9 +36,9 @@ function BrandIntro({ content }: { content?: BrandIntroContent }) {
         <div className="space-y-6 text-gray-800">
           <p className="font-brand text-2xl text-pink-600">{c.title || defaultContent.title}</p>
           <h2 className="text-3xl font-bold leading-snug sm:text-4xl">{c.headline || defaultContent.headline}</h2>
-          <div className="rounded-2xl bg-white p-6 shadow">
-            <p>{c.paragraph1 || defaultContent.paragraph1}</p>
-            <p className="mt-4">{c.paragraph2 || defaultContent.paragraph2}</p>
+          <div className="space-y-4">
+            <p className="text-gray-700 leading-relaxed">{c.paragraph1 || defaultContent.paragraph1}</p>
+            <p className="text-gray-700 leading-relaxed">{c.paragraph2 || defaultContent.paragraph2}</p>
           </div>
         </div>
       </div>

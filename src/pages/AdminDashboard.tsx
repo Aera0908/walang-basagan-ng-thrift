@@ -4,6 +4,7 @@ import { FaArrowLeft, FaUserGroup, FaBox, FaMagnifyingGlass, FaPlus, FaComments,
 import minimalistLogo from '../assets/wbnt_minimalist.png'
 import heroBanners from '../data/heroBanners.json'
 import { useAuth } from '../context/AuthContext'
+import { mergeWithDefaults } from '../lib/homepageDefaults'
 import * as api from '../lib/api'
 import type { User, Product, ProductReview, SupportThread, SupportMessage, Order } from '../lib/api'
 
@@ -32,6 +33,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [dismissError, setDismissError] = useState(false)
+  const [saveSuccess, setSaveSuccess] = useState(false)
   const [searchUsers, setSearchUsers] = useState('')
   const [userForm, setUserForm] = useState<{ email: string; username: string; password: string; role: 'mod' | 'buyer' } | null>(null)
   const [productForm, setProductForm] = useState<Partial<Product> & { imageFile?: File } | null>(null)
@@ -65,7 +67,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
       setProducts(pRes.products)
       setThreads(tRes.threads)
       setOrders(oRes?.orders || [])
-      setHomepageContent(hRes?.content || {})
+      setHomepageContent(mergeWithDefaults((hRes?.content || {}) as api.HomepageContent) as Record<string, unknown>)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load')
     } finally {
@@ -338,7 +340,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
             }`}
           >
             <FaHouse className="h-5 w-5" />
-            Homepage
+            Homepage Settings
           </button>
         </nav>
       </aside>
@@ -958,7 +960,41 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                           {order.created_at ? new Date(order.created_at).toLocaleString() : ''} · {api.formatPrice(order.total_amount)}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {order.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={async () => {
+                                if (!user?.id) return
+                                setError('')
+                                try {
+                                  const { order: updated } = await api.updateOrderStatus(user.id, order.id, 'processing')
+                                  setOrders((prev) => prev.map((o) => (o.id === updated.id ? updated : o)))
+                                } catch (err) {
+                                  setError(err instanceof Error ? err.message : 'Failed to accept')
+                                }
+                              }}
+                              className="rounded-lg px-4 py-2 text-sm font-medium bg-green-600 text-white hover:bg-green-700"
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={async () => {
+                                if (!user?.id) return
+                                setError('')
+                                try {
+                                  const { order: updated } = await api.updateOrderStatus(user.id, order.id, 'cancelled')
+                                  setOrders((prev) => prev.map((o) => (o.id === updated.id ? updated : o)))
+                                } catch (err) {
+                                  setError(err instanceof Error ? err.message : 'Failed to cancel')
+                                }
+                              }}
+                              className="rounded-lg px-4 py-2 text-sm font-medium bg-red-600 text-white hover:bg-red-700"
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        )}
                         <select
                           value={order.status}
                           onChange={async (e) => {
@@ -1012,7 +1048,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                 <div className="flex gap-3">
                   <span className="text-red-500 text-xl">!</span>
                   <div>
-                    <p className="font-semibold text-red-800">Data Fetch Error</p>
+                    <p className="font-semibold text-red-800">Error</p>
                     <p className="text-sm text-red-600 mt-1">{error}</p>
                   </div>
                 </div>
@@ -1022,6 +1058,13 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                 >
                   Dismiss
                 </button>
+              </div>
+            )}
+
+            {saveSuccess && (
+              <div className="mb-6 flex items-center gap-3 p-4 rounded-lg bg-green-50 border border-green-200">
+                <FaCheck className="h-5 w-5 text-green-600 shrink-0" />
+                <p className="font-semibold text-green-800">Saved successfully!</p>
               </div>
             )}
 
@@ -1148,6 +1191,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                           const banners = [...((homepageContent.hero_banners as HeroBanner[]) || (heroBanners as HeroBanner[]))]
                           await api.updateHomepageSection(user.id, 'hero_banners', banners)
                           setHomepageContent((c) => ({ ...c, hero_banners: banners }))
+                          setSaveSuccess(true)
+                          setDismissError(false)
+                          load()
+                          setTimeout(() => setSaveSuccess(false), 3000)
                         } catch (err) {
                           setError(err instanceof Error ? err.message : 'Failed to save')
                         }
@@ -1184,6 +1231,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                       try {
                         const banners = (homepageContent.hero_banners as HeroBanner[]) || (heroBanners as HeroBanner[])
                         await api.updateHomepageSection(user.id, 'hero_banners', banners)
+                        setSaveSuccess(true)
+                        setDismissError(false)
+                        load()
+                        setTimeout(() => setSaveSuccess(false), 3000)
                       } catch (err) {
                         setError(err instanceof Error ? err.message : 'Failed to save')
                       }
@@ -1288,6 +1339,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                       setError('')
                       try {
                         await api.updateHomepageSection(user.id, 'brand_intro', homepageContent.brand_intro)
+                        setSaveSuccess(true)
+                        setDismissError(false)
+                        load()
+                        setTimeout(() => setSaveSuccess(false), 3000)
                       } catch (err) {
                         setError(err instanceof Error ? err.message : 'Failed to save')
                       }
@@ -1296,6 +1351,208 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                   >
                     Save Brand Intro
                   </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Jacket Showcase Section */}
+              <div className="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenSections((s) => ({ ...s, jacketShowcase: !s.jacketShowcase }))}
+                  className="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Jacket Showcase</h3>
+                    <p className="text-sm text-gray-500 mt-0.5">Edit cards with images, labels, and bottom text.</p>
+                  </div>
+                  <FaChevronDown className={`w-5 h-5 text-gray-500 shrink-0 transition-transform duration-200 ${openSections.jacketShowcase ? 'rotate-180' : ''}`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSections.jacketShowcase ? 'max-h-[2000px]' : 'max-h-0'}`}>
+                  <div className="px-6 pb-6 pt-4 border-t border-gray-100 space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Default image (fallback)</label>
+                      <p className="text-xs text-gray-500 mb-1">Used when a card has no image. Paste a public Google Drive link or URL.</p>
+                      <input
+                        value={String((homepageContent.jacket_showcase as { default_image?: string })?.default_image || '')}
+                        onChange={(e) => setHomepageContent((c) => ({
+                          ...c,
+                          jacket_showcase: { ...(c.jacket_showcase as object || {}), default_image: e.target.value },
+                        }))}
+                        placeholder="https://drive.google.com/uc?export=view&id=..."
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Bottom text</label>
+                      <input
+                        value={String((homepageContent.jacket_showcase as { bottom_text?: string })?.bottom_text || '')}
+                        onChange={(e) => setHomepageContent((c) => ({
+                          ...c,
+                          jacket_showcase: { ...(c.jacket_showcase as object || {}), bottom_text: e.target.value },
+                        }))}
+                        placeholder="WALANG BASAGAN"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Cards</label>
+                      {(() => {
+                        const defaultCards = [
+                          { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                          { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                          { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                        ]
+                        const cards = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                        const displayCards = cards?.length ? cards : defaultCards
+                        return displayCards.map((card, i) => (
+                        <div key={i} className="mb-4 p-4 rounded-lg border border-gray-200 space-y-3">
+                          <div className="flex gap-4 items-center flex-wrap">
+                          <input
+                            value={card.label}
+                            onChange={(e) => {
+                              const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                              const defaultCards = [
+                                { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                                { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                                { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                              ]
+                              const cards = [...(prev?.length ? prev : defaultCards)]
+                              cards[i] = { ...cards[i], label: e.target.value }
+                              setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                            }}
+                            placeholder="Label"
+                            className="flex-1 min-w-[120px] rounded border border-gray-200 px-3 py-2 text-sm"
+                          />
+                          <select
+                            value={card.bg_color || 'purple-200'}
+                            onChange={(e) => {
+                              const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                              const defaultCards = [
+                                { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                                { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                                { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                              ]
+                              const cards = [...(prev?.length ? prev : defaultCards)]
+                              cards[i] = { ...cards[i], bg_color: e.target.value }
+                              setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                            }}
+                            className="rounded border border-gray-200 px-3 py-2 text-sm"
+                          >
+                            <option value="purple-200">Lavender</option>
+                            <option value="pink-200">Pink</option>
+                            <option value="yellow-100">Yellow</option>
+                            <option value="purple-100">Light Purple</option>
+                            <option value="pink-100">Light Pink</option>
+                            <option value="green-100">Mint</option>
+                            <option value="sky-200">Sky</option>
+                            <option value="amber-100">Amber</option>
+                          </select>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                              const defaultCards = [
+                                { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                                { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                                { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                              ]
+                              const cards = (prev?.length ? prev : defaultCards).filter((_, j) => j !== i)
+                              setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                            }}
+                            className="text-red-600 hover:text-red-800 text-sm"
+                          >
+                            Remove
+                          </button>
+                          </div>
+                          <div>
+                            <label className="block text-xs font-medium text-gray-500 mb-1">Image (upload or URL)</label>
+                            <div className="flex gap-2 items-center flex-wrap">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="text-sm text-gray-600 file:mr-2 file:py-2 file:px-4 file:rounded file:border-0 file:bg-purple-50 file:text-purple-700"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0]
+                                  if (!file || !user?.id) return
+                                  setError('')
+                                  try {
+                                    const { filename } = await api.uploadHomepageImage(user.id, file)
+                                    const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                                    const defaultCards = [
+                                      { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                                      { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                                      { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                                    ]
+                                    const cards = [...(prev?.length ? prev : defaultCards)]
+                                    cards[i] = { ...cards[i], image: filename }
+                                    setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                                  } catch (err) {
+                                    setError(err instanceof Error ? err.message : 'Failed to upload')
+                                  }
+                                  e.target.value = ''
+                                }}
+                              />
+                              <span className="text-xs text-gray-500">or</span>
+                              <input
+                                value={card.image || ''}
+                                onChange={(e) => {
+                                  const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                                  const defaultCards = [
+                                    { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                                    { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                                    { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                                  ]
+                                  const cards = [...(prev?.length ? prev : defaultCards)]
+                                  cards[i] = { ...cards[i], image: e.target.value }
+                                  setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                                }}
+                                placeholder="Image URL or Google Drive link"
+                                className="flex-1 min-w-[180px] rounded border border-gray-200 px-3 py-2 text-sm"
+                              />
+                            </div>
+                            {card.image && (
+                              <img src={api.getImageUrl(card.image)} alt="" className="mt-2 h-20 w-28 object-cover rounded border" />
+                            )}
+                          </div>
+                        </div>
+                        ))
+                      })()}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const prev = (homepageContent.jacket_showcase as { cards?: { label: string; bg_color?: string; image?: string }[] })?.cards
+                          const defaultCards = [
+                            { label: 'Jacket', bg_color: 'purple-200', image: '' },
+                            { label: 'Jacket', bg_color: 'pink-200', image: '' },
+                            { label: 'Jacket', bg_color: 'yellow-100', image: '' },
+                          ]
+                          const cards = [...(prev?.length ? prev : defaultCards), { label: 'New', bg_color: 'purple-200', image: '' }]
+                          setHomepageContent((c) => ({ ...c, jacket_showcase: { ...(c.jacket_showcase as object || {}), cards } }))
+                        }}
+                        className="mt-2 px-4 py-2 rounded-lg border border-purple-600 text-purple-600 text-sm font-medium hover:bg-purple-50 flex items-center gap-2"
+                      >
+                        <FaPlus className="w-4 h-4" /> Add card
+                      </button>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        if (!user?.id) return
+                        setError('')
+                        try {
+                          await api.updateHomepageSection(user.id, 'jacket_showcase', homepageContent.jacket_showcase)
+                          setSaveSuccess(true)
+                          setDismissError(false)
+                          load()
+                          setTimeout(() => setSaveSuccess(false), 3000)
+                        } catch (err) {
+                          setError(err instanceof Error ? err.message : 'Failed to save')
+                        }
+                      }}
+                      className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700"
+                    >
+                      Save Jacket Showcase
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1381,6 +1638,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                     setError('')
                     try {
                       await api.updateHomepageSection(user.id, 'about_us', homepageContent.about_us)
+                      setSaveSuccess(true)
+                      setDismissError(false)
+                      load()
+                      setTimeout(() => setSaveSuccess(false), 3000)
                     } catch (err) {
                       setError(err instanceof Error ? err.message : 'Failed to save')
                     }
@@ -1455,6 +1716,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                     setError('')
                     try {
                       await api.updateHomepageSection(user.id, 'trusted_section', homepageContent.trusted_section)
+                      setSaveSuccess(true)
+                      setDismissError(false)
+                      load()
+                      setTimeout(() => setSaveSuccess(false), 3000)
                     } catch (err) {
                       setError(err instanceof Error ? err.message : 'Failed to save')
                     }
@@ -1476,13 +1741,13 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                 >
                   <div>
                     <h3 className="font-semibold text-gray-900">Footer Socials</h3>
-                    <p className="text-sm text-gray-500 mt-0.5">Upload images for Facebook, Instagram, TikTok profile modals.</p>
+                    <p className="text-sm text-gray-500 mt-0.5">Upload images for Facebook, Instagram, TikTok, X profile modals.</p>
                   </div>
                   <FaChevronDown className={`w-5 h-5 text-gray-500 shrink-0 transition-transform duration-200 ${openSections.footerSocials ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openSections.footerSocials ? 'max-h-[1200px]' : 'max-h-0'}`}>
                   <div className="px-6 pb-6 pt-4 border-t border-gray-100 space-y-6">
-                    {(['facebook', 'instagram', 'tiktok'] as const).map((social) => {
+                    {(['facebook', 'instagram', 'tiktok', 'x'] as const).map((social) => {
                       const socialData = (homepageContent.footer_socials || {})[social] as { image?: string } | undefined
                       const image = socialData?.image || ''
                       return (
@@ -1548,6 +1813,10 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                         setError('')
                         try {
                           await api.updateHomepageSection(user.id, 'footer_socials', homepageContent.footer_socials || {})
+                          setSaveSuccess(true)
+                          setDismissError(false)
+                          load()
+                          setTimeout(() => setSaveSuccess(false), 3000)
                         } catch (err) {
                           setError(err instanceof Error ? err.message : 'Failed to save')
                         }

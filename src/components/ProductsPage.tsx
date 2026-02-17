@@ -40,39 +40,39 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50/80 via-white to-amber-50/60 pt-28 pb-16">
+    <div className="min-h-screen border-t-4 border-black bg-gradient-to-b from-fuchsia-50/80 via-white to-fuchsia-50/60 pt-28 pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <button
           onClick={onBack}
-          className="mb-6 text-sm text-gray-600 hover:text-pink-500 transition"
+          className="mb-6 font-y2k text-sm font-bold text-black hover:text-[#FF00FF] transition"
         >
           ← Back to home
         </button>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">All Products</h1>
+        <h1 className="font-y2k text-2xl font-black uppercase tracking-tight text-black mb-6">All Products</h1>
 
-        {/* Filters bar - Shopee style */}
-        <div className="mb-6 rounded-xl bg-white border border-gray-200 p-4 shadow-sm">
+        {/* Filters bar - Y2K style */}
+        <div className="mb-6 rounded-lg border-2 border-black bg-white p-4 shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:flex-wrap">
             {/* Search */}
             <div className="relative flex-1 min-w-[200px]">
-              <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-black/60" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search products..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-300 text-sm"
+                className="w-full pl-10 pr-4 py-2.5 rounded border-2 border-black focus:outline-none focus:ring-2 focus:ring-[#FF00FF] text-sm"
               />
             </div>
 
             {/* Category filter */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium text-gray-600">Category:</span>
+              <span className="font-y2k text-sm font-bold text-black">Category:</span>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                className="rounded border-2 border-black px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
               >
                 <option value="">All</option>
                 {CATEGORIES.map((c) => (
@@ -83,33 +83,33 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
 
             {/* Price range */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium text-gray-600">Price:</span>
+              <span className="font-y2k text-sm font-bold text-black">Price:</span>
               <input
                 type="number"
                 min={0}
                 value={priceMin}
                 onChange={(e) => setPriceMin(e.target.value === '' ? '' : e.target.valueAsNumber)}
                 placeholder="Min"
-                className="w-24 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                className="w-24 rounded border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
               />
-              <span className="text-gray-400">—</span>
+              <span className="text-black/60">—</span>
               <input
                 type="number"
                 min={0}
                 value={priceMax}
                 onChange={(e) => setPriceMax(e.target.value === '' ? '' : e.target.valueAsNumber)}
                 placeholder="Max"
-                className="w-24 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                className="w-24 rounded border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
               />
             </div>
 
             {/* Sort */}
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">Sort by:</span>
+              <span className="font-y2k text-sm font-bold text-black">Sort by:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                className="rounded border-2 border-black px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
               >
                 <option value="name">Name (A-Z)</option>
                 <option value="price_low">Price: Low to High</option>
@@ -120,7 +120,7 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
         </div>
 
         {/* Results count */}
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="font-y2k text-sm font-bold text-black mb-4">
           {sorted.length} product{sorted.length !== 1 ? 's' : ''} found
         </p>
 
@@ -128,15 +128,15 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
         {loading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="animate-pulse rounded-2xl border border-gray-100 bg-white p-4">
-                <div className="aspect-[3/4] rounded-xl bg-gray-200" />
-                <div className="mt-4 h-4 bg-gray-200 rounded" />
-                <div className="mt-2 h-4 w-16 bg-gray-200 rounded" />
+              <div key={i} className="animate-pulse rounded-lg border-2 border-black bg-white p-4 shadow-[4px_4px_0_rgba(0,0,0,0.15)]">
+                <div className="aspect-[3/4] rounded bg-black/10" />
+                <div className="mt-4 h-4 bg-black/10 rounded" />
+                <div className="mt-2 h-4 w-16 bg-black/10 rounded" />
               </div>
             ))}
           </div>
         ) : sorted.length === 0 ? (
-          <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center text-gray-500">
+          <div className="rounded-lg border-2 border-black bg-white p-12 text-center font-y2k font-bold text-black shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
             No products match your filters. Try adjusting your search or filters.
           </div>
         ) : (
@@ -148,27 +148,27 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
                   if (p.status !== 'Available') return
                   onProductClick(String(p.id))
                 }}
-                className={`group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-lg hover:-translate-y-0.5 ${
+                className={`group overflow-hidden rounded-lg border-2 border-black bg-white shadow-[4px_4px_0_rgba(0,0,0,0.2)] transition hover:shadow-[6px_6px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 ${
                   p.status === 'Available' ? 'cursor-pointer' : 'cursor-default opacity-80'
                 }`}
               >
-                <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-pink-50 to-purple-50">
+                <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-fuchsia-50 to-pink-50">
                   {p.image ? (
                     <img src={api.getImageUrl(p.image)} alt={p.name} className="h-full w-full object-cover" />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-4xl text-pink-200">Outfit</div>
+                    <div className="flex h-full items-center justify-center text-4xl text-[#FF00FF]/30">Outfit</div>
                   )}
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-800 truncate">{p.name}</h3>
-                  <p className="text-pink-500 font-medium mt-1">{api.formatPrice(p.price)}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{p.size}</p>
-                  <p className="text-xs text-gray-500">{p.category || '—'}</p>
+                  <h3 className="font-y2k font-bold text-black truncate">{p.name}</h3>
+                  <p className="text-[#E6007E] font-bold mt-1">{api.formatPrice(p.price)}</p>
+                  <p className="text-xs text-black/70 mt-0.5">{p.size}</p>
+                  <p className="text-xs text-black/60">{p.category || '—'}</p>
                   <div className="mt-1 flex items-center gap-1 text-amber-500 text-xs">
                     {'★'.repeat(Math.round(p.rating || 0))}{'☆'.repeat(5 - Math.round(p.rating || 0))}
-                    <span className="text-gray-500">({p.review_count || 0})</span>
+                    <span className="text-black/60">({p.review_count || 0})</span>
                   </div>
-                  <p className={'mt-1 text-xs font-medium ' + (p.status === 'Sold' ? 'text-gray-400' : 'text-green-500')}>
+                  <p className={'mt-1 text-xs font-bold ' + (p.status === 'Sold' ? 'text-black/50' : 'text-green-600')}>
                     {p.status === 'Sold' ? 'Item sold' : 'Available'}
                   </p>
                 </div>

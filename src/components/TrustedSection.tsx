@@ -20,9 +20,9 @@ function TrustedSection({ content }: { content?: TrustedContent }) {
   }, [ids.join(',')])
 
   return (
-    <section className="bg-white py-16">
+    <section className="border-y-4 border-black bg-white py-16">
       <div className="mx-auto max-w-5xl px-6">
-        <span className="mx-auto block w-fit rounded-lg bg-pink-500 px-6 py-2 font-bold uppercase tracking-widest text-white">
+        <span className="mx-auto block w-fit rounded border-2 border-black bg-[#FF00FF] px-6 py-2 font-y2k font-bold uppercase tracking-widest text-white">
           {content?.title || 'They Trusted Us'}
         </span>
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
@@ -30,7 +30,7 @@ function TrustedSection({ content }: { content?: TrustedContent }) {
             <p className="col-span-2 text-center text-gray-500">No featured reviews yet. Admins can select reviews from product reviews.</p>
           ) : (
             reviews.map((r) => (
-              <div key={r.id} className="rounded-2xl border border-pink-100 bg-gradient-to-br from-pink-50 to-yellow-50 p-6">
+              <div key={r.id} className="rounded-lg border-2 border-black bg-gradient-to-br from-pink-50 to-fuchsia-50 p-6 shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
                 <p className="text-amber-400">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</p>
                 <p className="mt-2 text-gray-800">{r.comment || 'No comment'}</p>
                 <p className="mt-4 text-sm text-gray-500">@{r.username || 'Customer'}</p>

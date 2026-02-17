@@ -25,18 +25,18 @@ function Y2KSection() {
   ]
 
   return (
-    <section className="bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 py-16 px-6">
+    <section className="border-y-4 border-black bg-gradient-to-r from-fuchsia-50 via-pink-50 to-fuchsia-50 py-16 px-6">
       <div className="mx-auto max-w-6xl">
-        <span className="mx-auto block w-fit rounded-lg bg-pink-500 px-6 py-2 font-bold uppercase tracking-widest text-white">
+        <span className="mx-auto block w-fit rounded border-2 border-black bg-[#FF00FF] px-6 py-2 font-y2k font-bold uppercase tracking-widest text-white">
           Y2K Style
         </span>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {cards.map((card, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-pink-100 bg-white p-6 shadow-sm transition hover:shadow-md"
+              className="rounded-lg border-2 border-black bg-white p-6 shadow-[4px_4px_0_rgba(0,0,0,0.2)] transition hover:shadow-[6px_6px_0_rgba(0,0,0,0.3)]"
             >
-              <h3 className="text-sm font-bold uppercase leading-tight text-gray-800">
+              <h3 className="font-y2k text-sm font-bold uppercase leading-tight text-black">
                 {card.title}
               </h3>
               <div className="mt-4 space-y-3 text-sm text-gray-600">

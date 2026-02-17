@@ -43,7 +43,7 @@ function Footer({ footerSocials }: FooterProps) {
   const [socialModal, setSocialModal] = useState<SocialId | null>(null)
 
   return (
-    <footer className="bg-gray-900 py-12 text-gray-300">
+    <footer className="border-t-4 border-black bg-black py-12 text-gray-300">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <img
@@ -58,7 +58,7 @@ function Footer({ footerSocials }: FooterProps) {
                 <button
                   key={item.id}
                   onClick={() => setSocialModal(item.id)}
-                  className="hover:text-pink-400 transition"
+                  className="hover:text-[#FF00FF] transition"
                   aria-label={item.label}
                 >
                   <Icon className="h-5 w-5" />
@@ -73,7 +73,7 @@ function Footer({ footerSocials }: FooterProps) {
             <ul className="mt-3 space-y-2 text-sm">
               {group.items.map((link) => (
                 <li key={link.label}>
-                  <a href={link.url} className="hover:text-pink-400">
+                  <a href={link.url} className="hover:text-[#FF00FF]">
                     {link.label}
                   </a>
                 </li>

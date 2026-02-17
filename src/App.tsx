@@ -5,9 +5,9 @@ import * as api from './lib/api'
 import type { HomepageContent } from './lib/api'
 import { mergeWithDefaults } from './lib/homepageDefaults'
 import categories from './data/categories.json'
-import Header from './components/Header'
+import Y2KHeader from './components/Y2KHeader'
 import BackgroundMusic from './components/BackgroundMusic'
-import Hero from './components/Hero'
+import Y2KHero from './components/Y2KHero'
 import BrandIntro from './components/BrandIntro'
 import JacketShowcase from './components/JacketShowcase'
 import TrustedSection from './components/TrustedSection'
@@ -18,6 +18,7 @@ import AboutUsSection from './components/AboutUsSection'
 import ReviewsSection from './components/ReviewsSection'
 import Y2KSection from './components/Y2KSection'
 import NewsletterSection from './components/NewsletterSection'
+import Y2KBanner from './components/Y2KBanner'
 import Footer from './components/Footer'
 import ProductDetailPage from './components/ProductDetailPage'
 import CartPage from './components/CartPage'
@@ -106,7 +107,7 @@ function App() {
     <div className="min-h-screen bg-white font-poppins text-gray-900">
       <BackgroundMusic />
       <SupportWidget onLoginPrompt={() => navigate('/login')} />
-      <Header
+      <Y2KHeader
         categories={categories}
         cartCount={cartCount}
         hasLightPageBackground={isProductsPage || isCart || isCheckout || isOrders}
@@ -200,23 +201,33 @@ function App() {
           path="/"
           element={
             <>
-              <Hero banners={homepageContent.hero_banners} />
-              <BrandIntro content={homepageContent.brand_intro} />
-              <JacketShowcase content={homepageContent.jacket_showcase} />
-              <TrustedSection content={homepageContent.trusted_section} />
-              <AchievementsSection
-                achievementsTitle={homepageContent.achievements_title}
-                isLoggedIn={!!user}
-                onProductClick={(id) => navigate(`/products/${id}`)}
-                onBrowseMoreClick={() => navigate('/products')}
-                onLoginPrompt={() => navigate('/login')}
+              {/* Y2K diagonal split background */}
+              <div
+                className="fixed inset-0 -z-10 min-h-screen"
+                style={{
+                  background: 'linear-gradient(165deg, #FF00FF 0%, #FF00FF 55%, #FFFFFF 55%, #FFFFFF 100%)',
+                }}
               />
-              <FeaturesSection />
-              <AboutUsSection content={homepageContent.about_us} />
-              <ReviewsSection />
-              <Y2KSection />
-              <NewsletterSection />
-              <Footer footerSocials={homepageContent.footer_socials} />
+              <Y2KHero banners={homepageContent.hero_banners} />
+              <Y2KBanner />
+              <div className="bg-white">
+                <BrandIntro content={homepageContent.brand_intro} />
+                <JacketShowcase content={homepageContent.jacket_showcase} />
+                <TrustedSection content={homepageContent.trusted_section} />
+                <AchievementsSection
+                  achievementsTitle={homepageContent.achievements_title}
+                  isLoggedIn={!!user}
+                  onProductClick={(id) => navigate(`/products/${id}`)}
+                  onBrowseMoreClick={() => navigate('/products')}
+                  onLoginPrompt={() => navigate('/login')}
+                />
+                <FeaturesSection />
+                <AboutUsSection content={homepageContent.about_us} />
+                <ReviewsSection />
+                <Y2KSection />
+                <NewsletterSection />
+                <Footer footerSocials={homepageContent.footer_socials} />
+              </div>
             </>
           }
         />

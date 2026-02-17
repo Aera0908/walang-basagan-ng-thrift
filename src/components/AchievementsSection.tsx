@@ -30,9 +30,9 @@ function AchievementsSection({ achievementsTitle = 'Some of Our Achievements', o
   }
 
   return (
-    <section id="achievements" className="scroll-mt-20 bg-gradient-to-r from-sky-50 via-pink-50 to-yellow-50 py-16">
+    <section id="achievements" className="scroll-mt-20 border-y-4 border-black bg-gradient-to-r from-fuchsia-50 via-pink-50 to-fuchsia-50 py-16">
       <div className="mx-auto max-w-6xl px-6">
-        <span className="mx-auto block w-fit rounded-lg bg-pink-500 px-6 py-2 font-bold uppercase tracking-widest text-white">
+        <span className="mx-auto block w-fit rounded border-2 border-black bg-[#FF00FF] px-6 py-2 font-y2k font-bold uppercase tracking-widest text-white">
           {achievementsTitle}
         </span>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -49,7 +49,7 @@ function AchievementsSection({ achievementsTitle = 'Some of Our Achievements', o
               <article
                 key={p.id}
                 onClick={() => handleProductClick(p)}
-                className={`group overflow-hidden rounded-2xl border border-pink-100 bg-white shadow transition hover:-translate-y-1 hover:shadow-lg ${
+                className={`group overflow-hidden rounded-lg border-2 border-black bg-white shadow-[4px_4px_0_rgba(0,0,0,0.2)] transition hover:-translate-y-1 hover:shadow-[6px_6px_0_rgba(0,0,0,0.3)] ${
                   p.status === 'Available' ? 'cursor-pointer' : 'cursor-default opacity-80'
                 }`}
               >
@@ -83,7 +83,7 @@ function AchievementsSection({ achievementsTitle = 'Some of Our Achievements', o
               if (!isLoggedIn) onLoginPrompt?.()
               else onBrowseMoreClick?.()
             }}
-            className="text-pink-600 font-semibold underline hover:text-pink-700 transition"
+            className="font-y2k font-bold text-black underline decoration-2 underline-offset-2 hover:text-[#FF00FF] transition"
           >
             Browse more products
           </button>

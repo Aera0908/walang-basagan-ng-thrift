@@ -24,8 +24,8 @@ function JacketShowcase({ content }: { content?: JacketShowcaseContent }) {
   const defaultImage = content?.default_image
 
   return (
-    <section className="py-16">
-      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-2xl" style={{ gridTemplateColumns: `repeat(${Math.max(1, cards.length)}, 1fr)` }}>
+    <section className="border-y-4 border-black bg-white py-16">
+      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-lg border-4 border-black" style={{ gridTemplateColumns: `repeat(${Math.max(1, cards.length)}, 1fr)` }}>
         {cards.map((card, i) => {
           const imgSrc = card.image ? api.getImageUrl(card.image) : defaultImage || ''
           return (
@@ -42,7 +42,7 @@ function JacketShowcase({ content }: { content?: JacketShowcaseContent }) {
           )
         })}
       </div>
-      <p className="mx-auto mt-4 max-w-5xl px-6 text-center text-6xl font-black uppercase tracking-widest text-pink-100">
+      <p className="mx-auto mt-4 max-w-5xl px-6 text-center font-y2k text-5xl font-black uppercase tracking-[0.3em] text-[#FF00FF]/40 sm:text-6xl">
         {bottomText}
       </p>
     </section>

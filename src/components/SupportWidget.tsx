@@ -128,11 +128,13 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
 
   if (user?.role === 'admin' || user?.role === 'mod') return null
 
+  const messageButtonClass = "fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-black bg-black text-white shadow-[4px_4px_0_rgba(0,0,0,0.3)] hover:bg-[#FF00FF] hover:border-[#FF00FF] transition"
+
   if (!user) {
     return (
       <button
         onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-pink-500 text-white shadow-lg hover:bg-pink-600 transition"
+        className={messageButtonClass}
         title="Message us"
       >
         <FaMessage className="h-6 w-6" />
@@ -144,17 +146,17 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
     <>
       <button
         onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-pink-500 text-white shadow-lg hover:bg-pink-600 transition"
+        className={messageButtonClass}
         title="Message us"
       >
         <FaMessage className="h-6 w-6" />
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] rounded-2xl border border-gray-200 bg-white shadow-xl flex flex-col max-h-[480px]">
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-pink-50 rounded-t-2xl">
-            <h3 className="font-semibold text-gray-900">Message us</h3>
-            <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-700">
+        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] rounded-lg border-4 border-black bg-white shadow-[8px_8px_0_rgba(0,0,0,0.3)] flex flex-col max-h-[480px]">
+          <div className="flex items-center justify-between p-4 border-b-2 border-black bg-fuchsia-50/80 rounded-t-lg">
+            <h3 className="font-y2k font-bold text-black uppercase tracking-tight">Message us</h3>
+            <button onClick={() => setOpen(false)} className="p-1 rounded border-2 border-black text-black hover:bg-black hover:text-white transition">
               <FaXmark className="h-5 w-5" />
             </button>
           </div>
@@ -166,27 +168,27 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
                   value={newSubject}
                   onChange={(e) => setNewSubject(e.target.value)}
                   placeholder="Subject (optional)"
-                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                  className="w-full rounded border-2 border-black px-3 py-2 font-y2k text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
                 />
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Your message..."
-                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200 resize-none"
+                  className="w-full rounded border-2 border-black px-3 py-2 font-y2k text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#FF00FF] resize-none"
                   rows={4}
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={handleCreateAndSend}
                     disabled={!message.trim() || sending}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-pink-500 text-white text-sm font-medium hover:bg-pink-600 disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded border-2 border-black bg-black text-white font-y2k text-sm font-bold hover:bg-[#FF00FF] hover:border-[#FF00FF] disabled:opacity-50 transition"
                   >
                     <FaPaperPlane className="h-4 w-4" />
                     Send
                   </button>
                   <button
                     onClick={() => { setShowNewForm(false); setMessage(''); setNewSubject(''); }}
-                    className="px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 text-sm"
+                    className="px-4 py-2 rounded border-2 border-black font-y2k text-sm font-bold hover:bg-black/5 transition"
                   >
                     Cancel
                   </button>
@@ -194,28 +196,28 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
               </div>
             ) : (
               <>
-                <div className="border-b border-gray-100 overflow-y-auto max-h-32">
+                <div className="border-b-2 border-black overflow-y-auto max-h-32">
                   {loading ? (
-                    <div className="p-4 text-center text-gray-500 text-sm">Loading...</div>
+                    <div className="p-4 text-center font-y2k text-sm font-bold text-black">Loading...</div>
                   ) : threads.length > 0 ? (
                     threads.map((t) => (
                       <button
                         key={t.id}
                         onClick={() => loadThread(t)}
-                        className={`w-full text-left px-4 py-2.5 border-b border-gray-50 hover:bg-gray-50 text-sm ${
-                          selectedThread?.id === t.id ? 'bg-pink-50 border-l-2 border-l-pink-500' : ''
+                        className={`w-full text-left px-4 py-2.5 border-b border-black/10 hover:bg-fuchsia-50/50 font-y2k text-sm font-bold ${
+                          selectedThread?.id === t.id ? 'bg-fuchsia-100 border-l-4 border-l-black' : ''
                         }`}
                       >
-                        <p className="font-medium text-gray-900 truncate">{t.subject}</p>
-                        <p className="text-xs text-gray-500">{new Date(t.created_at).toLocaleDateString()}</p>
+                        <p className="font-bold text-black truncate">{t.subject}</p>
+                        <p className="text-xs font-bold text-black/60">{new Date(t.created_at).toLocaleDateString()}</p>
                       </button>
                     ))
                   ) : (
-                    <div className="p-4 text-center text-gray-500 text-sm">No conversations yet</div>
+                    <div className="p-4 text-center font-y2k text-sm font-bold text-black/70">No conversations yet</div>
                   )}
                   <button
                     onClick={handleStartNew}
-                    className="w-full text-left px-4 py-2.5 text-pink-600 hover:bg-pink-50 text-sm font-medium"
+                    className="w-full text-left px-4 py-2.5 font-y2k text-sm font-bold text-[#E6007E] hover:bg-fuchsia-50 border-t border-black/10"
                   >
                     + New message
                   </button>
@@ -230,8 +232,8 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
                           className={`flex ${m.sender_role === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
                           <div
-                            className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                              m.sender_role === 'user' ? 'bg-pink-100 text-pink-900' : 'bg-gray-100 text-gray-900'
+                            className={`max-w-[85%] rounded-lg border-2 border-black px-3 py-2 font-y2k text-sm font-bold ${
+                              m.sender_role === 'user' ? 'bg-fuchsia-100 text-black' : 'bg-black/5 text-black'
                             }`}
                           >
                             {m.content}
@@ -239,18 +241,18 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-gray-100 flex gap-2">
+                    <div className="p-3 border-t-2 border-black flex gap-2 bg-white">
                       <input
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Type a message..."
-                        className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        className="flex-1 rounded border-2 border-black px-3 py-2 font-y2k text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#FF00FF]"
                         onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendReply()}
                       />
                       <button
                         onClick={handleSendReply}
                         disabled={!message.trim() || sending}
-                        className="p-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 disabled:opacity-50"
+                        className="p-2 rounded border-2 border-black bg-black text-white hover:bg-[#FF00FF] hover:border-[#FF00FF] disabled:opacity-50 transition"
                       >
                         <FaPaperPlane className="h-4 w-4" />
                       </button>
@@ -262,7 +264,7 @@ function SupportWidget({ onLoginPrompt }: SupportWidgetProps) {
           </div>
 
           {error && (
-            <div className="p-3 border-t border-red-100 bg-red-50 text-red-700 text-sm">
+            <div className="p-3 border-t-2 border-black bg-red-50 text-red-800 font-y2k text-sm font-bold">
               {error}
             </div>
           )}

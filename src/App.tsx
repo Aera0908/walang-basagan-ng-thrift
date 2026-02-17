@@ -35,7 +35,14 @@ function InfoPageRoute({ onBack, footerSocials, onProductsClick }: { onBack: () 
   if (!page) return <Navigate to="/" replace />
   return (
     <>
-      <InfoPage title={page.title} content={page.content} onBack={onBack} />
+      <InfoPage
+        title={page.title}
+        content={page.content}
+        icon={'icon' in page ? page.icon : undefined}
+        email={'email' in page ? page.email : undefined}
+        phone={'phone' in page ? page.phone : undefined}
+        onBack={onBack}
+      />
       <Footer footerSocials={footerSocials as import('./lib/api').FooterSocials} onProductsClick={onProductsClick} />
     </>
   )

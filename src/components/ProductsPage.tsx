@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import * as api from '../lib/api'
 import type { Product } from '../lib/api'
@@ -12,10 +13,16 @@ interface ProductsPageProps {
 }
 
 function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
+  const [searchParams] = useSearchParams()
+  const categoryFromUrl = searchParams.get('category') || ''
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [category, setCategory] = useState<string>('')
+  const [category, setCategory] = useState<string>(() => {
+    const c = categoryFromUrl
+    if (c && CATEGORIES.includes(c as (typeof CATEGORIES)[number])) return c
+    return ''
+  })
   const [sortBy, setSortBy] = useState<SortOption>('name')
   const [priceMin, setPriceMin] = useState<number | ''>('')
   const [priceMax, setPriceMax] = useState<number | ''>('')
@@ -23,6 +30,12 @@ function ProductsPage({ onProductClick, onBack }: ProductsPageProps) {
   useEffect(() => {
     api.fetchProducts().then((res) => setProducts(res.products)).catch(() => setProducts([])).finally(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    if (categoryFromUrl && CATEGORIES.includes(categoryFromUrl as (typeof CATEGORIES)[number])) {
+      setCategory(categoryFromUrl)
+    }
+  }, [categoryFromUrl])
 
   const filtered = products.filter((p) => {
     const matchSearch = !search.trim() || p.name.toLowerCase().includes(search.toLowerCase())

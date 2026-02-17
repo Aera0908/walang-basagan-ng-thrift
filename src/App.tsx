@@ -25,6 +25,21 @@ import CartPage from './components/CartPage'
 import CheckoutPage from './components/CheckoutPage'
 import OrdersPage from './components/OrdersPage'
 import SupportWidget from './components/SupportWidget'
+import InfoPage from './pages/InfoPage'
+import { INFO_PAGES, type InfoPageSlug } from './data/infoPages'
+import { useParams, Navigate } from 'react-router-dom'
+
+function InfoPageRoute({ onBack, footerSocials, onProductsClick }: { onBack: () => void; footerSocials?: unknown; onProductsClick?: (category?: string) => void }) {
+  const { slug } = useParams<{ slug: string }>()
+  const page = slug && slug in INFO_PAGES ? INFO_PAGES[slug as InfoPageSlug] : null
+  if (!page) return <Navigate to="/" replace />
+  return (
+    <>
+      <InfoPage title={page.title} content={page.content} onBack={onBack} />
+      <Footer footerSocials={footerSocials as import('./lib/api').FooterSocials} onProductsClick={onProductsClick} />
+    </>
+  )
+}
 
 function App() {
   const { user } = useAuth()
@@ -38,6 +53,7 @@ function App() {
 
   const isProductsPage = pathname === '/products' || pathname.startsWith('/products/')
   const isCart = pathname === '/cart'
+  const isInfoPage = pathname.startsWith('/info/')
   const isCheckout = pathname === '/checkout'
   const isOrders = pathname === '/orders'
   const isHome = pathname === '/'
@@ -77,12 +93,12 @@ function App() {
     setScrollTarget('about-us')
   }
 
-  const handleProductsClick = () => {
+  const handleProductsClick = (category?: string) => {
     if (!user) {
       navigate('/login')
       return
     }
-    navigate('/products')
+    navigate(category ? `/products?category=${encodeURIComponent(category)}` : '/products')
   }
 
   const handleAddToCart = (productId: number) => {
@@ -110,7 +126,7 @@ function App() {
       <Y2KHeader
         categories={categories}
         cartCount={cartCount}
-        hasLightPageBackground={isProductsPage || isCart || isCheckout || isOrders}
+        hasLightPageBackground={isProductsPage || isCart || isCheckout || isOrders || isInfoPage}
         onLogin={() => navigate('/login')}
         onSignup={() => navigate('/signup')}
         onGoToAdmin={() => navigate('/admin/products')}
@@ -131,6 +147,12 @@ function App() {
               onBuyNow={handleBuyNow}
               onBack={() => navigate('/products')}
             />
+          }
+        />
+        <Route
+          path="/info/:slug"
+          element={
+            <InfoPageRoute onBack={() => navigate('/')} footerSocials={homepageContent.footer_socials} onProductsClick={handleProductsClick} />
           }
         />
         <Route
@@ -219,7 +241,7 @@ function App() {
                 <ReviewsSection />
                 <Y2KSection />
                 <NewsletterSection />
-                <Footer footerSocials={homepageContent.footer_socials} />
+                <Footer footerSocials={homepageContent.footer_socials} onProductsClick={handleProductsClick} />
               </div>
             </>
           }

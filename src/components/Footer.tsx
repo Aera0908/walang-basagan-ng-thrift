@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaInstagram, FaFacebookF, FaTiktok, FaXTwitter } from 'react-icons/fa6'
 import logo from '../assets/wbnt_minimalist.png'
 import socials from '../data/socials.json'
-import footerLinks from '../data/footerLinks.json'
+import { INFO_PAGES, type InfoPageSlug } from '../data/infoPages'
 import * as api from '../lib/api'
 import type { FooterSocials } from '../lib/api'
 
@@ -14,10 +15,21 @@ interface Social {
   url: string
 }
 
-interface FooterGroup {
-  title: string
-  items: { label: string; url: string }[]
-}
+const PRODUCT_LINKS = [
+  { label: 'All Y2K clothing', category: '' },
+  { label: 'Tops', category: 'Top' },
+  { label: 'Bottoms', category: 'Bottom' },
+  { label: 'Sets', category: 'Set' },
+] as const
+
+const INFO_LINKS: { label: string; slug: InfoPageSlug }[] = [
+  { label: 'Reviews', slug: 'reviews' },
+  { label: 'About Us', slug: 'about-us' },
+  { label: 'The concept', slug: 'the-concept' },
+  { label: 'Contact', slug: 'contact' },
+  { label: 'Delivery and Returns', slug: 'delivery-returns' },
+  { label: 'Terms of sale', slug: 'terms-of-sale' },
+]
 
 const socialIconMap: Record<SocialId, React.ComponentType<{ className?: string; 'aria-label'?: string }>> = {
   instagram: FaInstagram,
@@ -35,12 +47,21 @@ const PLACEHOLDER_IMAGES: Record<SocialId, string> = {
 
 interface FooterProps {
   footerSocials?: FooterSocials
+  onProductsClick?: (category?: string) => void
 }
 
-function Footer({ footerSocials }: FooterProps) {
+function Footer({ footerSocials, onProductsClick }: FooterProps) {
   const socialItems = socials as Social[]
-  const groups = footerLinks as FooterGroup[]
+  const navigate = useNavigate()
   const [socialModal, setSocialModal] = useState<SocialId | null>(null)
+
+  const handleProductsClick = (category?: string) => {
+    if (onProductsClick) {
+      onProductsClick(category)
+    } else {
+      navigate(category ? `/products?category=${encodeURIComponent(category)}` : '/products')
+    }
+  }
 
   return (
     <footer className="border-t-4 border-black bg-black py-12 text-gray-300">
@@ -67,20 +88,33 @@ function Footer({ footerSocials }: FooterProps) {
             })}
           </div>
         </div>
-        {groups.map((group) => (
-          <div key={group.title}>
-            <p className="font-semibold text-white">{group.title}</p>
-            <ul className="mt-3 space-y-2 text-sm">
-              {group.items.map((link) => (
-                <li key={link.label}>
-                  <a href={link.url} className="hover:text-[#FF00FF]">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div>
+          <p className="font-semibold text-white">Y2K Thrift Store</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {PRODUCT_LINKS.map((link) => (
+              <li key={link.label}>
+                <button
+                  onClick={() => handleProductsClick(link.category || undefined)}
+                  className="hover:text-[#FF00FF] transition text-left"
+                >
+                  {link.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="font-semibold text-white">Information</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {INFO_LINKS.map((link) => (
+              <li key={link.slug}>
+                <Link to={`/info/${link.slug}`} className="hover:text-[#FF00FF] transition">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <p className="mt-10 text-center text-xs text-gray-500">
         2026 Walang Basagan ng Thrift. All rights reserved.

@@ -201,13 +201,6 @@ function App() {
           path="/"
           element={
             <>
-              {/* Y2K diagonal split background */}
-              <div
-                className="fixed inset-0 -z-10 min-h-screen"
-                style={{
-                  background: 'linear-gradient(165deg, #FF00FF 0%, #FF00FF 55%, #FFFFFF 55%, #FFFFFF 100%)',
-                }}
-              />
               <Y2KHero banners={homepageContent.hero_banners} />
               <Y2KBanner />
               <div className="bg-white">

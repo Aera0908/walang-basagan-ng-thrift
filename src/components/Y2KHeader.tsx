@@ -52,7 +52,8 @@ function Y2KHeader({
         useSolidHeader ? 'bg-white/95 shadow-md' : 'bg-transparent'
       }`}
     >
-      {/* Free shipping marquee */}
+      {/* Free shipping marquee - only when scrolled/solid (merged with hero when at top) */}
+      {useSolidHeader && (
       <div className="overflow-hidden border-b-2 border-black bg-[#FF00FF] py-2">
         <div className="flex animate-marquee whitespace-nowrap font-y2k text-sm font-black uppercase tracking-widest text-white" style={{ width: 'max-content' }}>
           {[1, 2].map((copy) => (
@@ -66,12 +67,13 @@ function Y2KHeader({
           ))}
         </div>
       </div>
+      )}
       <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3">
         {/* Nav links - left */}
         <nav className="hidden items-center gap-4 text-xs font-bold uppercase tracking-wider md:flex">
           {categories.map((cat) => {
             const linkClass = `transition hover:underline ${
-              useSolidHeader ? 'text-black' : 'text-black drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]'
+              useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'
             }`
             if (cat === 'Reviews') {
               return (
@@ -113,7 +115,7 @@ function Y2KHeader({
         <button
           type="button"
           onClick={onHomeClick}
-          className="justify-self-center font-y2k text-sm font-black uppercase tracking-[0.3em] text-black sm:tracking-[0.5em]"
+          className={`justify-self-center font-y2k text-sm font-black uppercase tracking-[0.3em] sm:tracking-[0.5em] ${useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'}`}
         >
           WALANG BASAGAN
         </button>
@@ -124,7 +126,7 @@ function Y2KHeader({
             <button
               onClick={onOrdersClick}
               className={`transition hover:underline ${
-                useSolidHeader ? 'text-black' : 'text-black drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]'
+                useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'
               }`}
               title="Orders"
             >
@@ -134,7 +136,7 @@ function Y2KHeader({
           <button
             onClick={user ? onCartClick : onLogin}
             className={`relative p-1 transition hover:opacity-80 ${
-              useSolidHeader ? 'text-black' : 'text-black drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]'
+              useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'
             }`}
             title="Cart"
           >
@@ -150,14 +152,18 @@ function Y2KHeader({
               {(user.role === 'admin' || user.role === 'mod') && (
                 <button
                   onClick={onGoToAdmin}
-                  className="rounded border-2 border-black bg-white px-3 py-1.5 text-xs font-bold tracking-wider text-black transition hover:bg-black hover:text-white"
+                  className={`rounded border-2 px-3 py-1.5 text-xs font-bold tracking-wider transition ${
+                  useSolidHeader ? 'border-black bg-white text-black hover:bg-black hover:text-white' : 'border-white bg-white/10 text-white hover:bg-white/20'
+                }`}
                 >
                   Admin
                 </button>
               )}
               <button
                 onClick={logout}
-                className="rounded border-2 border-black bg-black px-3 py-1.5 text-xs font-bold tracking-wider text-white transition hover:bg-white hover:text-black"
+                className={`rounded border-2 px-3 py-1.5 text-xs font-bold tracking-wider transition ${
+                  useSolidHeader ? 'border-black bg-black text-white hover:bg-white hover:text-black' : 'border-white bg-white text-black hover:bg-black hover:text-white'
+                }`}
               >
                 Logout
               </button>
@@ -165,13 +171,17 @@ function Y2KHeader({
           ) : (
             <>
               <button
-                className="hidden rounded border-2 border-black bg-white px-3 py-1.5 text-xs font-bold tracking-wider text-black transition hover:bg-black hover:text-white md:inline-block"
+                className={`hidden rounded border-2 px-3 py-1.5 text-xs font-bold tracking-wider transition md:inline-block ${
+                  useSolidHeader ? 'border-black bg-white text-black hover:bg-black hover:text-white' : 'border-white bg-white/10 text-white hover:bg-white/20'
+                }`}
                 onClick={onSignup}
               >
                 Sign Up
               </button>
               <button
-                className="rounded border-2 border-black bg-black px-3 py-1.5 text-xs font-bold tracking-wider text-white transition hover:bg-white hover:text-black"
+                className={`rounded border-2 px-3 py-1.5 text-xs font-bold tracking-wider transition ${
+                  useSolidHeader ? 'border-black bg-black text-white hover:bg-white hover:text-black' : 'border-white bg-white text-black hover:bg-black hover:text-white'
+                }`}
                 onClick={onLogin}
               >
                 Log In

@@ -81,7 +81,7 @@ function Y2KHeader({
           />
         </button>
         {/* Nav links */}
-        <nav className="hidden items-center justify-center gap-6 text-xs font-bold uppercase tracking-wider md:flex md:justify-self-center">
+        <nav className="hidden items-center justify-center gap-6 text-xs font-bold uppercase tracking-wider md:flex md:justify-self-center md:ml-16">
           {categories.map((cat) => {
             const linkClass = `transition hover:underline ${
               useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { FaCartShopping } from 'react-icons/fa6'
 import { useAuth } from '../context/AuthContext'
+import logo from '../assets/wbnt_logo.png'
 
 interface Y2KHeaderProps {
   categories: string[]
@@ -68,9 +69,19 @@ function Y2KHeader({
         </div>
       </div>
       )}
-      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3">
-        {/* Nav links - left */}
-        <nav className="hidden items-center gap-4 text-xs font-bold uppercase tracking-wider md:flex">
+      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-6 px-4 py-3">
+        {/* Logo - far left */}
+        <button type="button" onClick={onHomeClick} className="flex shrink-0 justify-self-start mr-10">
+          <img
+            src={logo}
+            alt="Walang Basagan ng Thrift"
+            className={`h-10 w-auto transition-all duration-300 ${
+              useSolidHeader ? '' : 'drop-shadow-[0_0_2px_rgba(0,0,0,0.8)] brightness-110'
+            }`}
+          />
+        </button>
+        {/* Nav links */}
+        <nav className="hidden items-center justify-center gap-6 text-xs font-bold uppercase tracking-wider md:flex md:justify-self-center">
           {categories.map((cat) => {
             const linkClass = `transition hover:underline ${
               useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'
@@ -110,15 +121,6 @@ function Y2KHeader({
             )
           })}
         </nav>
-
-        {/* Logo - center */}
-        <button
-          type="button"
-          onClick={onHomeClick}
-          className={`justify-self-center font-y2k text-sm font-black uppercase tracking-[0.3em] sm:tracking-[0.5em] ${useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'}`}
-        >
-          WALANG BASAGAN NG THRIFT
-        </button>
 
         {/* Icons - right */}
         <div className="flex items-center justify-end gap-3">

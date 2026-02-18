@@ -32,7 +32,7 @@
   },
   "jacket_showcase": {
     "default_image": "",
-    "bottom_text": "WALANG BASAGAN",
+    "bottom_text": "WALANG BASAGAN NG THRIFT",
     "cards": [
       { "label": "Jacket", "bg_color": "purple-200", "image": "https://drive.google.com/thumbnail?id=107A0D-sISXwwuZ5-XAlfswGklZrUcNs9&sz=w1000" },
       { "label": "Jacket", "bg_color": "pink-200", "image": "https://drive.google.com/thumbnail?id=1044_uq69kapveJxakCezpfYt7OHn_GiV&sz=w1000" },

@@ -117,7 +117,7 @@ function Y2KHeader({
           onClick={onHomeClick}
           className={`justify-self-center font-y2k text-sm font-black uppercase tracking-[0.3em] sm:tracking-[0.5em] ${useSolidHeader ? 'text-black' : 'text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]'}`}
         >
-          WALANG BASAGAN
+          WALANG BASAGAN NG THRIFT
         </button>
 
         {/* Icons - right */}

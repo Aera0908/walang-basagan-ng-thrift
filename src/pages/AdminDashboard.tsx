@@ -642,7 +642,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                       <option value="">Select category</option>
                       <option value="Top">Top</option>
                       <option value="Bottom">Bottom</option>
-                      <option value="Set">Set</option>
+                      <option value="Accessories">Accessories</option>
                     </select>
                   </div>
                 </div>
@@ -1391,7 +1391,7 @@ function AdminDashboard({ onBack }: { onBack: () => void }) {
                           ...c,
                           jacket_showcase: { ...(c.jacket_showcase as object || {}), bottom_text: e.target.value },
                         }))}
-                        placeholder="WALANG BASAGAN"
+                        placeholder="WALANG BASAGAN NG THRIFT"
                         className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm"
                       />
                     </div>

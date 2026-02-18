@@ -20,7 +20,7 @@ const DEFAULT_CARDS = [
 
 function JacketShowcase({ content }: { content?: JacketShowcaseContent }) {
   const cards = content?.cards?.length ? content.cards : DEFAULT_CARDS
-  const bottomText = content?.bottom_text ?? 'WALANG BASAGAN'
+  const bottomText = content?.bottom_text ?? 'WALANG BASAGAN NG THRIFT'
   const defaultImage = content?.default_image
 
   return (

@@ -19,7 +19,7 @@ const PRODUCT_LINKS = [
   { label: 'All Y2K clothing', category: '' },
   { label: 'Tops', category: 'Top' },
   { label: 'Bottoms', category: 'Bottom' },
-  { label: 'Sets', category: 'Set' },
+  { label: 'Accessories', category: 'Accessories' },
 ] as const
 
 const INFO_LINKS: { label: string; slug: InfoPageSlug }[] = [

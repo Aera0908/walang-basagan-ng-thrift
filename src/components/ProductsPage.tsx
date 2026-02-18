@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 import * as api from '../lib/api'
 import type { Product } from '../lib/api'
 
-const CATEGORIES = ['Top', 'Bottom', 'Set'] as const
+const CATEGORIES = ['Top', 'Bottom', 'Accessories'] as const
 type SortOption = 'name' | 'price_low' | 'price_high'
 
 interface ProductsPageProps {
